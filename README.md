@@ -33,7 +33,7 @@ Before you start, ensure you have the following installed on your system:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/secure-sign.git
+   git clone https://github.com/CHINMAYVIVEK/secure-sign.git
    ```
 
 2. Change into the project directory:
