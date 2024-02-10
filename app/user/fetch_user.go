@@ -8,7 +8,6 @@ import (
 
 func getUser(w http.ResponseWriter, r *http.Request, username string) (response config.Response) {
 
-	response = config.Response{}
 	var fetchedUser User
 
 	if helper.IsPatternValid("Email", username) || helper.IsPatternValid("Mobile", username) {

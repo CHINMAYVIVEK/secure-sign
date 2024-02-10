@@ -1,12 +1,17 @@
 package helper
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
 	config "secure-sign/config"
 )
 
 // QueryRow executes a SQL query and returns a single row result
+
+func QueryRowContext(ctx context.Context, query string, args ...interface{}) *sql.Row {
+	return config.GetPostgreSQL().QueryRowContext(ctx, query, args...)
+}
 func QueryRow(query string, args ...interface{}) *sql.Row {
 	return config.GetPostgreSQL().QueryRow(query, args...)
 }

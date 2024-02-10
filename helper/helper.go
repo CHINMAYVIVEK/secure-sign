@@ -26,6 +26,7 @@ func RespondJSON(w http.ResponseWriter, status int, payload interface{}) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
 	json.NewEncoder(w).Encode(payload)
+	return
 }
 
 // hashPassword hashes the given password using bcrypt.

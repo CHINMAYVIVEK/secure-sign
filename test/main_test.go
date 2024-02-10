@@ -9,7 +9,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestAll(t *testing.T) {
-	t.Run("User", func(t *testing.T) {
-		t.Run("LoginHandler", TestLoginHandler)
-	})
+	t.Run("LoginHandler", TestLoginHandler)
+	// t.Run("RegisterHandler", TestRegisterHandler)
+	t.Run("GetUserHandler", TestGetUserHandler)
 }

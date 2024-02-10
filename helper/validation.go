@@ -77,9 +77,10 @@ func GenerateRandomPassword() string {
 	return string(password)
 }
 
-func RequestValidator(w http.ResponseWriter, r *http.Request, data interface{}) error {
+func DecodeRequest(r *http.Request, data interface{}) error {
 	if err := json.NewDecoder(r.Body).Decode(&data); err != nil {
 		if err != nil {
+			SugarObj.Error(err)
 			return err
 		}
 	}

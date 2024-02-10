@@ -1,7 +1,9 @@
 package user
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
 	"net/http"
 	"secure-sign/config"
 	helper "secure-sign/helper"
@@ -9,8 +11,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-func login(w http.ResponseWriter, r *http.Request, credentials LoginRequest) (response config.Response) {
-	response = config.Response{}
+func login(ctx context.Context, credentials LoginRequest) (response config.Response) {
 
 	// Sanitize input
 	credentials.Username = helper.SanitizeInput(credentials.Username)
@@ -24,7 +25,8 @@ func login(w http.ResponseWriter, r *http.Request, credentials LoginRequest) (re
 			WHERE email = $1 OR phone_number = $1
 		`
 		// Execute the query using a prepared statement
-		row := helper.QueryRow(query, credentials.Username)
+		// row := helper.QueryRow(query, credentials.Username)
+		row := helper.QueryRowContext(ctx, query, credentials.Username)
 		var fetchedPassword string
 		err := row.Scan(&fetchedPassword)
 		if err != nil {
@@ -35,6 +37,7 @@ func login(w http.ResponseWriter, r *http.Request, credentials LoginRequest) (re
 					StatusCode: http.StatusOK,
 					Message:    "Invalid Credentials",
 				}
+				fmt.Println("Invalid Credentials ::")
 				return response
 			}
 

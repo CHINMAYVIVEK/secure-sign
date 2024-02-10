@@ -30,9 +30,9 @@ type LoginRequest struct {
 // RegisterHandler handles the registration endpoint.
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	var newUser User
-	response := config.Response{}
+	var response config.Response
 	// Decode the request body into the newUser struct
-	err := helper.RequestValidator(w, r, &newUser)
+	err := helper.DecodeRequest(r, &newUser)
 	if err != nil {
 		response = config.Response{
 			Status:     "Bad Request",
@@ -46,17 +46,19 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	response = registration(w, r, newUser)
 	helper.RespondJSON(w, response.StatusCode, response)
-	return
+
 }
 
 // LoginHandler handles the login endpoint.
+
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
+
 	var credentials LoginRequest
 
 	response := config.Response{}
 	// Decode the request body into the credentials struct
 
-	err := helper.RequestValidator(w, r, &credentials)
+	err := helper.DecodeRequest(r, &credentials)
 	if err != nil {
 		response := config.Response{
 			Status:     "Bad Request",
@@ -68,11 +70,36 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response = login(w, r, credentials)
+	response = login(r.Context(), credentials)
 	helper.RespondJSON(w, response.StatusCode, response)
 
-	return
 }
+
+// func LoginHandler(w http.ResponseWriter, r *http.Request) {
+// 	var credentials LoginRequest
+// 	// Get database connection from context
+// 	db := r.Context().Value("db").(*sql.DB)
+
+// 	fmt.Printf("credentials: %+v\n", credentials)
+// 	fmt.Printf("db: %+v\n", db)
+
+// 	// Decode the request body into the credentials struct
+// 	err := helper.DecodeRequest(r, &credentials)
+// 	if err != nil {
+// 		response := config.Response{
+// 			Status:     "Bad Request",
+// 			StatusCode: http.StatusBadRequest,
+// 			Message:    err.Error(),
+// 		}
+// 		fmt.Println("failed:: ", err)
+// 		helper.SugarObj.Error(err)
+// 		helper.RespondJSON(w, http.StatusBadRequest, response)
+// 		return
+// 	}
+
+// 	response := login(r.Context(), db, credentials)
+// 	helper.RespondJSON(w, response.StatusCode, response)
+// }
 
 // GetUserHandler handles the fetch user endpoint.
 func GetUserHandler(w http.ResponseWriter, r *http.Request) {

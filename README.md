@@ -14,8 +14,6 @@ Secure Sign is a Golang-based authentication service that facilitates user regis
     - [API Endpoints](#api-endpoints)
     - [Docker Deployment](#docker-deployment)
   - [Project Structure](#project-structure)
-    - [Directories:](#directories)
-    - [Files:](#files)
     - [Profiling :](#profiling-)
 
 ## Getting Started
@@ -113,51 +111,50 @@ To deploy the Secure Sign authentication service using Docker:
 ## Project Structure
 
 ```
-├── app/
-│   └── user/
-│       ├── login.go
-│       └── registration.go
-├── config/
-│   └── config.go
-├── middleware/
-│   └── middleware.go
-├── helper/
-│   └── helper.go
+
+├── app
+│   ├── health
+│   │   └── health.go
+│   └── user
+│       ├── fetch_user.go
+│       ├── login.go
+│       ├── registration.go
+│       └── user.go
+├── config
+│   ├── config.go
+│   └── postgres.go
+├── data
+│   ├── data.sql
+│   ├── secure-login.postman_collection.json
+│   └── test.sql
+├── helper
+│   ├── helper.go
+│   ├── postgres.go
+│   ├── validation.go
+│   └── zap-logger.go
+├── logs
+│   └── access.log
+├── middleware
+│   └── middleware.go
+├── server
+│   ├── router.go
+│   └── server.go
+├── test
+│   ├── cpu.prof
+│   ├── env
+│   ├── main_test.go
+│   ├── test.test
+│   ├── user_test.go
+│   └── users.json
+├── main.go
+├── compose.yaml
 ├── dockerfile
+├── env
 ├── go.mod
 ├── go.sum
-├── main.go
 └── README.md
+
 ```
-
-### Directories:
-
-- **`app/`:**
-  - Contains the application logic.
-  - Subdirectory `user/` includes files for user-related functionality (`login.go` and `registration.go`).
-
-- **`config/`:**
-  - Manages configuration settings.
-  - `config.go` contains configuration-related code.
-
-- **`middleware/`:**
-  - Implements middleware for the application.
-  - `middleware.go` contains middleware-related code.
-
-- **`helper/`:**
-  - Includes helper functions.
-  - `helper.go` contains utility functions.
-
-### Files:
-
-- **`dockerfile`:**
-  - Provides instructions for building a Docker container.
-
-- **`go.mod` and `go.sum`:**
-  - Go module files managing dependencies.
-
-- **`main.go`:**
-  - The entry point for the application.
 
 ### Profiling :
 

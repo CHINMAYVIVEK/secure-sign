@@ -8,7 +8,6 @@ import (
 )
 
 func registration(w http.ResponseWriter, r *http.Request, newUser User) (response config.Response) {
-	response = config.Response{}
 
 	// Validate the required fields
 	if err := validateRequiredFields(newUser); err != nil {
@@ -114,23 +113,23 @@ func validateRequiredFields(user User) error {
 	user.Password = helper.SanitizeInput(user.Password)
 
 	if user.FirstName == "" {
-		return fmt.Errorf("First name is required")
+		return fmt.Errorf("first name is required")
 	}
 	if user.LastName == "" {
-		return fmt.Errorf("Last name is required")
+		return fmt.Errorf("last name is required")
 	}
 	if !helper.IsPatternValid("Email", user.Email) {
-		return fmt.Errorf("Email is not valid")
+		return fmt.Errorf("email is not valid")
 	}
 
 	if !helper.IsPatternValid("Mobile", user.PhoneNumber) {
-		return fmt.Errorf("Phone number is not valid")
+		return fmt.Errorf("phone number is not valid")
 	}
 	if user.Email == "" {
-		return fmt.Errorf("Email is required")
+		return fmt.Errorf("email is required")
 	}
 	if user.Password == "" {
-		return fmt.Errorf("Password is required")
+		return fmt.Errorf("password is required")
 	}
 	return nil
 }
